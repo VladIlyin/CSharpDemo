@@ -17,7 +17,7 @@ namespace CSharpDemo.Demos.Concurrency.ConcurrentCollectionsDemo
         [DemoCaption("Channel - Throttling queue with capacity = 3")]
         public async Task Demo1()
         {
-            Channel<int> queue = Channel.CreateBounded<int>(3);
+            var queue = Channel.CreateBounded<int>(3);
             var writer = queue.Writer;
             var reader = queue.Reader;
 

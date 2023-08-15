@@ -27,7 +27,7 @@ namespace CSharpDemo.Demos.Interfaces
             tch.Internal();
 
             // Call public method
-            A a = new A();
+            var a = new A();
             a.PublicMethod();
         }
 

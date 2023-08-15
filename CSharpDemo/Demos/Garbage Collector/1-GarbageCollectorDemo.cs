@@ -58,7 +58,7 @@ namespace CSharpDemo.Demos.Garbage_Collector
 
             unsafe
             {
-                byte* ptr = (byte*)addr.ToPointer();
+                var ptr = (byte*)addr.ToPointer();
                 for (byte i = 0; i < arr.Length; i++) 
                 {
                     ptr[i] = i;

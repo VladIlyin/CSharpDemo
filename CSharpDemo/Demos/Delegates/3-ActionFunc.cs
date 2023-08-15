@@ -7,7 +7,7 @@ namespace CSharpDemo.Demos.Delegates
         [DemoCaption("Action demo: print sum of two numbers")]
         public void Demo1()
         {
-            Action<int, int> sumTwo = (int a, int b) => Console.WriteLine(a + b);
+            var sumTwo = (int a, int b) => Console.WriteLine(a + b);
 
             sumTwo(5, 5);
         }
@@ -15,7 +15,7 @@ namespace CSharpDemo.Demos.Delegates
         [DemoCaption("Func demo: sum two numbers and return result")]
         public void Demo2()
         {
-            Func<int, int, int> sumTwo = (int a, int b) => a + b;
+            var sumTwo = (int a, int b) => a + b;
 
             Console.WriteLine(sumTwo(15, 15));
         }

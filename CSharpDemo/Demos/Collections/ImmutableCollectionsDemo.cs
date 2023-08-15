@@ -10,14 +10,14 @@ namespace CSharpDemo.Demos.Collections
         [DemoCaption("Immutable List")]
         public void Demo1()
         {
-            ImmutableList<int> list = ImmutableList<int>.Empty;
+            var list = ImmutableList<int>.Empty;
 
             list = list.Insert(0, 13);
             list = list.Insert(0, 7);
             list = list.Add(15);
             
             // Displays 7 13 15.
-            foreach (int item in list)
+            foreach (var item in list)
             {
                 Console.WriteLine(item);
             }
@@ -33,26 +33,26 @@ namespace CSharpDemo.Demos.Collections
             immutableSet = immutableSet.Add(17);
 
             // Displays 7 13 17
-            foreach (int item in immutableSet)
+            foreach (var item in immutableSet)
             {
                 Console.WriteLine(item);
             }
 
             immutableSet = immutableSet.Remove(7);
 
-            ImmutableSortedSet<int> sortedSet = ImmutableSortedSet<int>.Empty;
+            var sortedSet = ImmutableSortedSet<int>.Empty;
             
             sortedSet = sortedSet.Add(13);
             sortedSet = sortedSet.Add(7);
             sortedSet = sortedSet.Add(17);
 
             // Displays 7 13 17
-            foreach (int item in sortedSet)
+            foreach (var item in sortedSet)
             {
                 Console.WriteLine(item);
             }
 
-            int smallestItem = sortedSet[0];
+            var smallestItem = sortedSet[0];
 
             Console.WriteLine(smallestItem); // 7
         }

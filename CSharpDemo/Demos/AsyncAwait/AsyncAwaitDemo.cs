@@ -9,18 +9,34 @@ namespace CSharpDemo.Demos.AsyncAwait
 {
     public class AsyncAwaitDemo : DemoRunner<AsyncAwaitDemo>
     {
-        private static string result;
+        private static string greeting;
 
-        public void Demo10()
+        [DemoCaption("Async/await: async method call is not awaited")]
+        public async Task Demo1()
         {
-            SaySomething();
-            Console.WriteLine(result); // null, cause SaySomething is not awaited
+            /*
+             * Метод SaySomething помечен как асинхронный (async/await),
+             * но поскольку таск возвращаемый методом не эвейтится, то на строчке метода 
+             * await Task.Delay(5); происходит передача управления вызывающему методу,
+             * то есть выполнение метода Main продолжится после возврата из метода SayHello
+             * и на консоль ничего не выведется
+             */
+            SayHi("Jane");
+            Console.WriteLine(greeting);
 
-            async Task<string> SaySomething()
+            /*
+             * Если добавить await к вызову метода, 
+             * то поток выполнения метода Main будет ожидать завершения метода
+             * SayHello и на консоль выведется Hello world!
+             */
+            await SayHi("Alice");
+            Console.WriteLine(greeting);
+
+            async Task SayHi(string name)
             {
+                greeting = "No greeting";
                 await Task.Delay(5);
-                result = "Hello world!";
-                return "Something";
+                greeting = $"Hi, {name}!";
             }
         }
     }

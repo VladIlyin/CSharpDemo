@@ -13,7 +13,7 @@ namespace CSharpDemo.Demos.Interfaces
             IInterfaceA ib = new B();
             ib.Method(); // I am IInterfaceA.Method
 
-            B b = new B();
+            var b = new B();
             b.Method(); // I am Method
         }
 

@@ -10,7 +10,7 @@ namespace CSharpDemo.Demos.LINQ
 
             var filtered = list.Where(w => w == 0);
 
-            for (int i = 0; i < filtered.Count(); i++)
+            for (var i = 0; i < filtered.Count(); i++)
             {
                 list.Remove(0);
             }

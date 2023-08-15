@@ -59,19 +59,19 @@ namespace CSharpDemo
             p1.Name = "Anna";
             Console.WriteLine(p1.GetHashCode());
 
-            int n = 1;
+            var n = 1;
             Interlocked.CompareExchange(ref n, 111, 1);
             Console.WriteLine(n);
 
-            List<int> list = new List<int>();
-            for (int i = 0; i < 2146500000; i++)
+            var list = new List<int>();
+            for (var i = 0; i < 2146500000; i++)
             {
                 list.Add(i);
             }
 
             Console.WriteLine(list[2146499999]);
 
-            foreach (int i in list)
+            foreach (var i in list)
             {
                 Thread.Sleep(500);
                 Console.WriteLine(i);
@@ -141,8 +141,8 @@ namespace CSharpDemo
 
             Console.WriteLine(set111.Count);
 
-            Console.WriteLine(dict.TryGetValue(p1, out int value1) ? value1 : null);
-            Console.WriteLine(dict.TryGetValue(p2, out int value2) ? value2 : null);
+            Console.WriteLine(dict.TryGetValue(p1, out var value1) ? value1 : null);
+            Console.WriteLine(dict.TryGetValue(p2, out var value2) ? value2 : null);
 
             PersonValue pv1 = new() { Age = 30, Name = "Vlad", Person = p1 };
             PersonValue pv2 = new() { Age = 30, Name = "Vlad", Person = p2 };

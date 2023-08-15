@@ -70,9 +70,9 @@ namespace CSharpDemo.Demos.Overloading
         [DemoCaption("Operator + overloading: sum of three Order class")]
         public void Demo1()
         {
-            Order ord1 = new Order() { Name = "First order", Total = 100 };
-            Order ord2 = new Order() { Name = "Second order", Total = 120 };
-            Order ord3 = new Order() { Name = "Third order", Total = 50 };
+            var ord1 = new Order() { Name = "First order", Total = 100 };
+            var ord2 = new Order() { Name = "Second order", Total = 120 };
+            var ord3 = new Order() { Name = "Third order", Total = 50 };
 
             var allOrders = ord1 + ord2 + ord3;
 
@@ -82,9 +82,9 @@ namespace CSharpDemo.Demos.Overloading
         [DemoCaption("Operators > < overloading: comparison of two Order class")]
         public void Demo2()
         {
-            Order ord1 = new Order() { Name = "First order", Total = 100 };
-            Order ord2 = new Order() { Name = "Second order", Total = 200 };
-            Order ord3 = new Order() { Name = "Third order", Total = 300 };
+            var ord1 = new Order() { Name = "First order", Total = 100 };
+            var ord2 = new Order() { Name = "Second order", Total = 200 };
+            var ord3 = new Order() { Name = "Third order", Total = 300 };
 
             var allOrders = ord1 + ord2 + ord3;
 
@@ -95,7 +95,7 @@ namespace CSharpDemo.Demos.Overloading
         [DemoCaption("Implicit conversion: Order class to decimal")]
         public void Demo3()
         {
-            Order ord = new Order() { Name = "First order", Total = 123.50M };
+            var ord = new Order() { Name = "First order", Total = 123.50M };
 
             decimal total = ord;
 
@@ -108,7 +108,7 @@ namespace CSharpDemo.Demos.Overloading
         [DemoCaption("Explicit conversion: List<string> to Order class")]
         public void Demo4()
         {
-            Order ord = (Order)new List<string> { "Apple", "Tomato", "Banana", "Bread", "Butter" };
+            var ord = (Order)new List<string> { "Apple", "Tomato", "Banana", "Bread", "Butter" };
 
             ConsoleHelper.WriteLineCollection(ord.Items);
         }

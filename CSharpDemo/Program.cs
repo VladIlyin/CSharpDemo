@@ -6,12 +6,14 @@ using CSharpDemo.Demos.Required_keyword;
 using CSharpDemo.Demos.WeakRefernce;
 using System.Text;
 using System.Threading.Channels;
+using CSharpDemo.Demos.AsyncAwait;
 using CSharpDemo.Demos.Concurrency.ConcurrentCollectionsDemo;
 using CSharpDemo.Demos.Interfaces;
 using CSharpDemo.Demos.Garbage_Collector;
 using CSharpDemo.Demos.Pointers;
 using CSharpDemo.Demos.Collections;
 using CSharpDemo.Demos.Concurrency;
+using CSharpDemo.Demos.RefLocal;
 
 public class Program
 {
@@ -23,7 +25,9 @@ public class Program
         //ImmutabilityCollectionsDemo.Instance.Run();
         //DictionaryDemo.Instance.Run();
         //await CancellationDemo.Instance.RunAsync(2);
-        RecordDemo.Instance.Run();
+        //RecordDemo.Instance.Run();
+        //await AsyncAwaitDemo.Instance.RunAsync();
+        RefLocalDemo.Instance.Run();
     }
 }
 

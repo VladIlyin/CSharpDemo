@@ -8,11 +8,11 @@ namespace CSharpDemo
         [DemoCaption("Span Demo: create a span over an array")]
         public void Demo1()
         {
-            int[] arr = new int[] { 10, 20, 30, 40, 50, 60, 70 };
-            Span<int> span = new Span<int>(arr);
+            var arr = new int[] { 10, 20, 30, 40, 50, 60, 70 };
+            var span = new Span<int>(arr);
 
             // change span values
-            for (int i = 0; i < span.Length; i++)
+            for (var i = 0; i < span.Length; i++)
             {
                 span[i]++;
             }
@@ -32,10 +32,10 @@ namespace CSharpDemo
             }
 
             byte data = 0;
-            for (int ctr = 0; ctr < nativeSpan.Length; ctr++)
+            for (var ctr = 0; ctr < nativeSpan.Length; ctr++)
                 nativeSpan[ctr] = data++;
 
-            int nativeSum = 0;
+            var nativeSum = 0;
             foreach (var value in nativeSpan)
                 nativeSum += value;
 
@@ -48,10 +48,10 @@ namespace CSharpDemo
         {
             byte data = 0;
             Span<byte> stackSpan = stackalloc byte[100];
-            for (int ctr = 0; ctr < stackSpan.Length; ctr++)
+            for (var ctr = 0; ctr < stackSpan.Length; ctr++)
                 stackSpan[ctr] = data++;
 
-            int stackSum = 0;
+            var stackSum = 0;
             foreach (var value in stackSpan)
                 stackSum += value;
 
@@ -61,10 +61,10 @@ namespace CSharpDemo
         [DemoCaption("Span Demo: slice of an array.")]
         public void Demo4()
         {
-            int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7 };
+            var arr = new int[] { 1, 2, 3, 4, 5, 6, 7 };
             
             // create slice of an array using Span
-            Span<int> slice = new Span<int>(arr, 2, 3);
+            var slice = new Span<int>(arr, 2, 3);
 
             ConsoleHelper.WriteLineSpan(slice, "Created with Span constructor"); // 3 4 5
 
@@ -77,9 +77,9 @@ namespace CSharpDemo
         [DemoCaption("Span Demo: binary search.")]
         public void Demo5()
         {
-            int[] arr = new int[] { 123, 214, 3148, 4748, 555, 678, 79874 };
+            var arr = new int[] { 123, 214, 3148, 4748, 555, 678, 79874 };
 
-            Span<int> slice = new Span<int>(arr);
+            var slice = new Span<int>(arr);
 
             Console.WriteLine(slice.BinarySearch(3148)); // 2
             Console.WriteLine(slice.BinarySearch(111)); // less han zero
@@ -88,7 +88,7 @@ namespace CSharpDemo
         [DemoCaption("Span Demo: memory overlapping.")]
         public void Demo6()
         {
-            int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7 };
+            var arr = new int[] { 1, 2, 3, 4, 5, 6, 7 };
 
             Span<int> slice = new(arr, 0, 4);
             ReadOnlySpan<int> readOnlySpan = new(arr, 3, 4);
@@ -110,7 +110,7 @@ namespace CSharpDemo
         {
             var arr = Enumerable.Range(1, 5).ToArray();
             
-            int[] copy = arr[0..5];
+            var copy = arr[0..5];
             Span<int> span = new(arr, 0, 4);
             
             // It won't change the original array, we only change copy of the array
@@ -129,7 +129,7 @@ namespace CSharpDemo
         {
             var arr = Enumerable.Range(1, 5).ToArray();
 
-            int[] copy = arr[0..5];
+            var copy = arr[0..5];
             Span<int> span = new(arr, 0, 4);
 
             // It won't change the original array, we only change copy of the array

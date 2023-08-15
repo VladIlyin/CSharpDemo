@@ -153,9 +153,9 @@ namespace CSharpDemo.Helpers
         private static bool IsAsyncMethod(Type classType, string methodName)
         {
             // Obtain the method with the specified name.
-            MethodInfo method = classType.GetMethod(methodName);
+            var method = classType.GetMethod(methodName);
 
-            Type attType = typeof(AsyncStateMachineAttribute);
+            var attType = typeof(AsyncStateMachineAttribute);
 
             // Obtain the custom attribute for the method. 
             // The value returned contains the StateMachineType property. 

@@ -17,7 +17,7 @@ namespace CSharpDemo.Demos.Pointers
             {
                 fixed (byte* p = arr)
                 {
-                    for (int i = 0; i < 10; i++) 
+                    for (var i = 0; i < 10; i++) 
                     {
                         p[i]++;
                     }
@@ -32,8 +32,8 @@ namespace CSharpDemo.Demos.Pointers
         {
             unsafe
             {
-                int number = 27;
-                int* pointerToNumber = &number;
+                var number = 27;
+                var pointerToNumber = &number;
 
                 Console.WriteLine($"Value of the variable: {number}");
                 Console.WriteLine($"Address of the variable: {(long)pointerToNumber:X}");

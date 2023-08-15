@@ -79,7 +79,7 @@ namespace CSharpDemo.Demos.Records
             var rect = new Rectangle(100, 200);
 
             // Deconstruction
-            (int width, int height) = rect;
+            (var width, var height) = rect;
             Console.WriteLine($"Width: {width}, Height: {height}");
         }
 

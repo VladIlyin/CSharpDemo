@@ -17,7 +17,7 @@
         {
             if (ReferenceEquals(this, obj)) return true;
 
-            PersonRef other = obj as PersonRef;
+            var other = obj as PersonRef;
             if (other == null) return false;
 
             return Equals(this.Name, other.Name)

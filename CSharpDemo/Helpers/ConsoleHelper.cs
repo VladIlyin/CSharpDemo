@@ -8,7 +8,7 @@
         {
             if (comment != null) Console.WriteLine($"{comment}\n");
 
-            foreach (T item in list)
+            foreach (var item in list)
             {
                 Console.WriteLine(item);
             }
@@ -22,7 +22,7 @@
         {
             if (comment != null) Console.WriteLine($"{comment}\n");
 
-            foreach (T item in span)
+            foreach (var item in span)
             {
                 Console.WriteLine(item);
             }
@@ -54,6 +54,21 @@
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ResetColor();
+        }
+
+        public static void WriteArray(int[,] arr)
+        {
+            Console.WriteLine();
+
+            for (var i = 0; i < arr.GetLength(0); i++)
+            {
+                for (var j = 0; j < arr.GetLength(1); j++)
+                {
+                    Console.Write($"{arr[i, j]} ");
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }

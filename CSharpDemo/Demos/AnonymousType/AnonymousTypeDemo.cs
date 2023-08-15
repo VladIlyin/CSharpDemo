@@ -49,7 +49,7 @@ namespace CSharpDemo.Demos.AnonymousType
         [DemoCaption("Anonymous type using with LINQ")]
         public void Demo4()
         {
-            List<Car> cars = new List<Car>()
+            var cars = new List<Car>()
             {
                 new Car() { Model = "Nissan", Year = 2019, Color = "Green" },
                 new Car() { Model = "Renault", Year = 2012, Color = "Black" },
@@ -78,13 +78,12 @@ namespace CSharpDemo.Demos.AnonymousType
             Console.WriteLine("{0} - Car with changed Year property", newCar);
 
             // Immutability is beneficial in multi-threaded applications
-
         }
 
         [DemoCaption("Anonymous type: with expression - reference copying")]
         public void Demo6()
         {
-            string[] ownersList = new[] { "John", "Jake", "Jane" };
+            var ownersList = new[] { "John", "Jake", "Jane" };
 
             var car1 = new { Model = "Nissan", Year = 2010, Owners = ownersList };
             var car2 = car1 with { };
@@ -103,7 +102,6 @@ namespace CSharpDemo.Demos.AnonymousType
 
             ConsoleHelper.WriteCollection(car1.Owners);   // Bob, Bill, Brian
             ConsoleHelper.WriteCollection(car2.Owners);   // Bob, Bill, Brian
-
         }
     }
 }

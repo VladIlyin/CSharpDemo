@@ -13,7 +13,7 @@ namespace CSharpDemo.Demos.WeakRefernce
         [DemoCaption("Demo 1")]
         public void Demo1()
         {
-            char quit = 'y';
+            var quit = 'y';
             while (quit == 'y')
             {
                 Console.WriteLine("Collect memory? (y/n)\n");

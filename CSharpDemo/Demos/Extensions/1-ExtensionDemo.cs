@@ -35,7 +35,7 @@ namespace CSharpDemo.Demos.Extensions
         [DemoCaption("Extension method demo")]
         public void Demo1()
         {
-            Order order = new Order() { Items = new List<string> { "Tea", "Coffee" } };
+            var order = new Order() { Items = new List<string> { "Tea", "Coffee" } };
 
             Console.WriteLine(order.GetItems());
         }
@@ -43,7 +43,7 @@ namespace CSharpDemo.Demos.Extensions
         [DemoCaption("Extension method have the lowest priority")]
         public void Demo2()
         {
-            Order order = new Order() { Items = new List<string> { "Tea", "Coffee" } };
+            var order = new Order() { Items = new List<string> { "Tea", "Coffee" } };
 
             // Method from the class will be invoked
             order.PrintOrder("New order (class method)");

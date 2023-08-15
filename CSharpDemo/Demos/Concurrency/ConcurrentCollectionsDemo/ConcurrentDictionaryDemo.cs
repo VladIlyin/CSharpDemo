@@ -67,7 +67,7 @@ namespace CSharpDemo.Demos.Concurrency.ConcurrentCollectionsDemo
                 numFailures++;
             }
 
-            if (!dict.TryRemove(1, out string value1))
+            if (!dict.TryRemove(1, out var value1))
             {
                 Console.WriteLine("TryRemove failed but should have succeeded");
                 numFailures++;
