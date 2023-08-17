@@ -39,7 +39,6 @@ namespace CSharpDemo.Demos.RefLocal
         [DemoCaption("Ref local: change all zero matrix elements")]
         public void Demo2()
         {
-
             var mx = new [,]
             {
                 { 0, 1, 0 },
@@ -52,12 +51,25 @@ namespace CSharpDemo.Demos.RefLocal
             var found = true;
             while (found)
             {
+                /*
+                 * Чтобы вызывающий объект имел возможность изменять состояние объекта,
+                 * возвращаемое ссылочное значение должно храниться в переменной,
+                 * которая явно определена как ссылочная локальная переменная
+                 */
                 ref var num = ref Find(mx, (n) => n == 0, out found);
                 num = 1;
             }
 
             ConsoleHelper.WriteArray(mx);
 
+
+            /*
+             * Возвращаемые ссылочные значения — это значения, которые метод
+             * возвращает вызывающему объекту по ссылке.
+             * Это значит, что вызывающий объект может изменять значение,
+             * возвращаемое методом, и это изменение будет отражаться
+             * в состоянии объекта в вызывающем методе.
+             */
             ref int Find(int[,] matrix, Func<int, bool> predicate, out bool found)
             {
                 for (var i = 0; i < matrix.GetLength(0); i++)

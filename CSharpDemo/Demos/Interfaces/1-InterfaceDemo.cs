@@ -2,60 +2,103 @@
 
 namespace CSharpDemo.Demos.Interfaces
 {
-    public class InterfaceDemo : DemoRunner<InterfaceDemo>
+    public partial class InterfaceDemo : DemoRunner<InterfaceDemo>
     {
-        [DemoCaption("Demo 1")]
+        [DemoCaption(@"Interface members demo:
+                        Methods: public, default public, protected, internal, private, static,
+                        Property: public, private, private static")]
         public void Demo1()
         {
-            ITestChild tch = new A();
+            IChild a = new A();
 
-            // Old plain public member
-            tch.PublicMethod();
+            // Class does not know anything about the default method
+            // of an interface, so we use interface type variable
+            a.PublicMethodDefault();
 
-            // Class does not know anything
-            // about the default method of an interface,
-            // so we use interface type variable
-            tch.PublicMethodWithDefault();
+            // Public property
+            Console.WriteLine(a.PublicProperty);
+
+            // Static method call
+            IParent.StaticMethod();
 
             // It's not allowed to call protected interface method directly
             // Protected interface member is allowed only within interface hierarchy
-            // So, we call protected method
-            // from deafult public method of ITestChild interface
-            tch.ProtectedMethodCallHere();
+            // So, we call protected method from default public method of IChild interface
+            a.ProtectedMethodCallHere();
 
             // Internal method call (implemented explicitly)
-            tch.Internal();
+            a.Internal();
 
-            // Call public method
-            var a = new A();
+            // Old plain public member
             a.PublicMethod();
         }
 
-        public interface ITest
+        public interface IParent
         {
-            protected void Protected();
-            internal void Internal();
-            public void PublicMethod();
-            public void PublicMethodWithDefault()
+            /// <summary>
+            /// Protected interface method
+            /// </summary>
+            protected void Protected()
             {
-                // Private interface methods are accessible
-                // from within interface,
-                // e.g. in public default methods
-                PrivateMethod();
-                Console.WriteLine(PrivateProp);
+                Console.WriteLine("I am interface protected method");
             }
+
+            /// <summary>
+            /// Internal interface method
+            /// </summary>
+            internal void Internal();
+
+            /// <summary>
+            /// Public interface method to be implemented in derived classes
+            /// </summary>
+            public void PublicMethod();
+
+            /// <summary>
+            /// Default public interface method
+            /// </summary>
+            public void PublicMethodDefault()
+            {
+                /* Private interface methods are accessible from within interface,
+                 * e.g. in public default methods
+                 */
+                PrivateMethod();
+                Console.WriteLine(PrivateProperty);
+                Console.WriteLine(PrivateStaticProperty);
+            }
+
+            /// <summary>
+            /// Private interface method
+            /// </summary>
             private void PrivateMethod()
             {
-                Console.WriteLine($"   I am private method");
+                Console.WriteLine("I am interface private method");
             }
-            private string PrivateProp { get => "   I am private property"; }
+
+            /// <summary>
+            /// Public interface property
+            /// </summary>
+            public string PublicProperty => "I am interface public property";
+
+            /// <summary>
+            /// Private interface property
+            /// </summary>
+            private string PrivateProperty => "I am interface private property";
+
+            /// <summary>
+            /// Private static interface property
+            /// </summary>
+            private static string PrivateStaticProperty => "I am interface private static property";
+
+            /// <summary>
+            /// Public static method
+            /// </summary>
             public static void StaticMethod()
             {
-                Console.WriteLine($"I am static method");
+                Console.WriteLine("I am interface static method");
             }
         }
 
-        public interface ITestChild : ITest
+        public interface IChild : IParent
         {
             public void ProtectedMethodCallHere()
             {
@@ -63,21 +106,16 @@ namespace CSharpDemo.Demos.Interfaces
             }
         }
 
-        public class A : ITestChild
+        public class A : IChild
         {
             public void PublicMethod()
             {
-                Console.WriteLine($"I am public method");
+                Console.WriteLine("I am Public method of class A");
             }
 
-            void ITest.Internal()
+            public void Internal()
             {
-                Console.WriteLine($"I am ITest.Internal");
-            }
-
-            void ITest.Protected()
-            {
-                Console.WriteLine($"I am ITest.Protected");
+                Console.WriteLine("I am Internal method of class A");
             }
         }
     }

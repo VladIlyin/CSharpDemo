@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace CSharpDemo.Demos.Overloading
 {
-    public class MethodOverloadingDemo : DemoRunner<MethodOverloadingDemo>
+    public partial class OverloadingDemo : DemoRunner<OverloadingDemo>
     {
-        public class Order { }
+        public class Message { }
 
-        public class OrderProcessor
+        public class MessageProcessor
         {
-            public void Process(Order order) { Console.WriteLine("Process(Order order) call"); }
-            public void Process(object order) { Console.WriteLine("Process(object order) call"); }
+            public void Process(Message order) { Console.WriteLine("Process(Message message) call"); }
+            public void Process(object order) { Console.WriteLine("Process(object message) call"); }
         }
 
         [DemoCaption("Method overloading")]
         public void Demo1()
         {
-            OrderProcessor processor = new();
+            MessageProcessor processor = new();
 
-            processor.Process(new Order());             // call Process(Order order) overloading
-            processor.Process(new Order() as object);   // call Process(object order) overloading
+            processor.Process(new Message());        
+            processor.Process(new Message() as object);
         }
     }
 }

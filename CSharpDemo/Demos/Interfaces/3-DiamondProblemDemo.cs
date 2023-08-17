@@ -3,44 +3,67 @@ using System.Runtime.CompilerServices;
 
 namespace CSharpDemo.Demos.Interfaces
 {
-    public class DiamondProblemDemo : DemoRunner<DiamondProblemDemo>
+    public partial class InterfaceDemo
     {
-        [DemoCaption("Demo 1")]
-        public void Demo1()
+        [DemoCaption("Demo 3")]
+        public void Demo3()
         {
+            /* Compiler uses the most specific override,
+             * which is defined in the class D.
+             * Let's say we comment out D and C implementation of Sum method
+             * then output will be 'I am from Interface B'
+             */
+
             IInterfaceA a = new D();
-            a.Method(); // I am from class D
+            a.Sum(2, 3); // I am from class D
 
             IInterfaceB b = new D();
-            b.Method(); // I am from class D
-
+            b.Sum(3, 4); // I am from class D
 
             IInterfaceC c = new D();
-            c.Method(); // I am from class D
+            c.Sum(4, 5); // I am from class D
         }
 
-        interface IInterfaceA
+        private interface IInterfaceA
         {
-            void Method()
+            int Sum(int a, int b)
             {
+                Console.WriteLine("I am From Interface A");
+                return a + b;
             }
         }
 
-        interface IInterfaceB : IInterfaceA
+        private interface IInterfaceB : IInterfaceA
         {
-            void IInterfaceA.Method() => Console.WriteLine("I am From Interface B");
+            int IInterfaceA.Sum(int a, int b)
+            {
+                Console.WriteLine("I am From Interface B");
+                return a + b;
+            }
         }
 
-        interface IInterfaceC : IInterfaceA
+        private interface IInterfaceC : IInterfaceA
         {
-            void IInterfaceA.Method() => Console.WriteLine("I am From Interface C");
+            int IInterfaceA.Sum(int a, int b)
+            {
+                Console.WriteLine("I am From Interface C");
+                return a + b;
+            }
         }
 
-        class D : IInterfaceB, IInterfaceC
+        public class D : IInterfaceB, IInterfaceC
         {
-            // Compiler uses the most specific override,
-            // which is defined in the class D.
-            void IInterfaceA.Method() => Console.WriteLine("I am from class D");
+            /*
+             * If there is no implementation then we have an error:
+             * Interface member 'IInterfaceA.Sum' doesn't have a most specific implementation
+             * So, compiler cannot choose between two implementations located on the same level.
+             */
+
+            public int Sum(int a, int b)
+            {
+                Console.WriteLine("I am from class D");
+                return a + b;
+            }
         }
     }
 }

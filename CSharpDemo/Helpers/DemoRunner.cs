@@ -4,53 +4,33 @@ using System.Runtime.CompilerServices;
 
 namespace CSharpDemo.Helpers
 {
-    public class DemoRunnerBenchmark<T> where T : DemoRunnerBenchmark<T>, new()
-    {
-        public static DemoRunnerBenchmark<T> Instance => new T();
-
-        public void RunBenchmark()
-        {
-            BenchmarkRunner.Run<T>();
-        }
-    }
-
     public class DemoRunner<T> where T : DemoRunner<T>, new()
     {
-        public static T Instance => new T();
+        public static void Run(params int[] demoNumbers)
+        {
+            RunInternal(demoNumbers);
+        }
 
-        public void RunBenchmark()
+        public static async Task RunAsync(params int[] demoNumbers)
+        {
+            await RunInternalAsync(demoNumbers);
+        }
+
+        public static void RunBenchmark()
         {
             BenchmarkRunner.Run<T>();
         }
 
-        public void Run(params int[] demoNumbers)
-        {
-            Instance.RunInternal(demoNumbers);
-        }
-
-        public async Task RunAsync(params int[] demoNumbers)
-        {
-            await Instance.RunInternalAsync(demoNumbers);
-        }
-
-        private void RunInternal(params int[] demoNumbers)
+        private static void RunInternal(params int[] demoNumbers)
         {
             var demo = new T();
-            if (demo is DemoRunner<T> runner)
-                runner.Go(demo, demoNumbers);
+            if (demo is DemoRunner<T>)
+                RunDemoMethods(demo, demoNumbers);
             else
                 throw new InvalidCastException($"T is not type of {typeof(DemoRunner<T>)}");
         }
 
-        //public static async Task<object> InvokeAsync(this MethodInfo @this, object obj, params object[] parameters)
-        //{
-        //    var task = (Task)@this.Invoke(obj, parameters);
-        //    await task.ConfigureAwait(false);
-        //    var resultProperty = task.GetType().GetProperty("Result");
-        //    return resultProperty.GetValue(task);
-        //}
-
-        private void Go(T instance, params int[] demoNumbers)
+        private static void RunDemoMethods(T instance, params int[] demoNumbers)
         {
             var methods = instance
                 .GetType()
@@ -60,50 +40,57 @@ namespace CSharpDemo.Helpers
             
             if (demoNumbers.Length == 0)
             {
-                methods.ForEach(m => InvokeDemoMethod(instance, m));
+                methods.ForEach(m => RunSingleDemoMethod(instance, m));
             }
             else
             {
                 foreach (var number in demoNumbers)
                 {
-                    InvokeDemoMethod(instance, methods
-                                .FirstOrDefault(x => x.Name == $"Demo{number}"));
+                    RunSingleDemoMethod(
+                        instance,
+                        methods.FirstOrDefault(x => x.Name == $"Demo{number}"));
                 }
             }
-            
         }
 
-        private static void InvokeDemoMethod(T instance, MethodInfo method)
+        private static void RunSingleDemoMethod(T instance, MethodInfo? method)
         {
-            if (method == null) return;
+            if (method == null)
+            {
+                return;
+            }
 
             var attr = method
                 .GetCustomAttributes(typeof(DemoCaptionAttribute), true)
                 .FirstOrDefault() as DemoCaptionAttribute;
 
-            PrintCaption(attr?.Caption ?? method.Name);
-
+            PrintHeaderToConsole(attr?.Caption ?? method.Name);
             method.Invoke(instance, null);
-            Console.WriteLine();
+            PrintFooterToConsole();
         }
 
-        private static void PrintCaption(string caption)
+        private static void PrintHeaderToConsole(string caption)
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{caption}\n");
             Console.ResetColor();
         }
 
-        private async Task RunInternalAsync(params int[] demoNumbers)
+        private static void PrintFooterToConsole()
+        {
+            Console.WriteLine();
+        }
+
+        private static async Task RunInternalAsync(params int[] demoNumbers)
         {
             var demo = new T();
-            if (demo is DemoRunner<T> runner)
-                await runner.GoAsync(demo, demoNumbers);
+            if (demo is DemoRunner<T>)
+                await RunDemoMethodsAsync(demo, demoNumbers);
             else
                 throw new InvalidCastException($"T is not type of {typeof(DemoRunner<T>)}");
         }
 
-        private async Task GoAsync(T instance, params int[] demoNumbers)
+        private static async Task RunDemoMethodsAsync(T instance, params int[] demoNumbers)
         {
             var methods = instance
                 .GetType()
@@ -117,21 +104,21 @@ namespace CSharpDemo.Helpers
             {
                 foreach (var method in methods)
                 {
-                    await InvokeDemoMethodAsync(instance, method);
+                    await InvokeSingleDemoMethodAsync(instance, method);
                 }
             }
             else
             {
                 foreach (var number in demoNumbers)
                 {
-                    await InvokeDemoMethodAsync(instance, methods
+                    await InvokeSingleDemoMethodAsync(instance, methods
                         .FirstOrDefault(x => x.Name == $"Demo{number}"));
                 }
             }
 
         }
 
-        private static async Task InvokeDemoMethodAsync(T instance, MethodInfo? method)
+        private static async Task InvokeSingleDemoMethodAsync(T instance, MethodInfo? method)
         {
             if (method == null)
             {
@@ -142,34 +129,27 @@ namespace CSharpDemo.Helpers
                 .GetCustomAttributes(typeof(DemoCaptionAttribute), true)
                 .FirstOrDefault() as DemoCaptionAttribute;
 
-            PrintCaption(attr?.Caption ?? method.Name);
+            PrintHeaderToConsole(attr?.Caption ?? method.Name);
 
-            var task = (Task)method.Invoke(instance, null);
-            await task;
+            var task = (Task?)method.Invoke(instance, null);
+            if (task != null) await task;
 
-            Console.WriteLine();
+            PrintFooterToConsole();
         }
 
         private static bool IsAsyncMethod(Type classType, string methodName)
         {
-            // Obtain the method with the specified name.
             var method = classType.GetMethod(methodName);
 
-            var attType = typeof(AsyncStateMachineAttribute);
+            if (method is null)
+            {
+                return false;
+            }
 
-            // Obtain the custom attribute for the method. 
-            // The value returned contains the StateMachineType property. 
-            // Null is returned if the attribute isn't present for the method. 
-            var attrib = (AsyncStateMachineAttribute)method.GetCustomAttribute(attType);
+            var attributeType = typeof(AsyncStateMachineAttribute);
+            var attribute = method.GetCustomAttribute(attributeType);
 
-            return (attrib != null);
+            return (attribute != null);
         }
-    }
-
-    public class DemoCaptionAttribute : Attribute
-    {
-        public string Caption { get; set; }
-
-        public DemoCaptionAttribute(string caption) => this.Caption = caption;
     }
 }

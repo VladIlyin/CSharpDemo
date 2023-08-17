@@ -2,7 +2,7 @@
 
 namespace CSharpDemo.Demos.Overloading          
 {
-    public class OperatorOverloading : DemoRunner<OperatorOverloading>
+    public partial class OverloadingDemo
     {
         public class Order
         {
@@ -67,8 +67,8 @@ namespace CSharpDemo.Demos.Overloading
             }
         }
 
-        [DemoCaption("Operator + overloading: sum of three Order class")]
-        public void Demo1()
+        [DemoCaption("OVerloading: Operator + overloading: sum of three Order class")]
+        public void Demo2()
         {
             var ord1 = new Order() { Name = "First order", Total = 100 };
             var ord2 = new Order() { Name = "Second order", Total = 120 };
@@ -80,7 +80,7 @@ namespace CSharpDemo.Demos.Overloading
         }
 
         [DemoCaption("Operators > < overloading: comparison of two Order class")]
-        public void Demo2()
+        public void Demo3()
         {
             var ord1 = new Order() { Name = "First order", Total = 100 };
             var ord2 = new Order() { Name = "Second order", Total = 200 };
@@ -93,7 +93,7 @@ namespace CSharpDemo.Demos.Overloading
         }
 
         [DemoCaption("Implicit conversion: Order class to decimal")]
-        public void Demo3()
+        public void Demo4()
         {
             var ord = new Order() { Name = "First order", Total = 123.50M };
 
@@ -106,7 +106,7 @@ namespace CSharpDemo.Demos.Overloading
         }
 
         [DemoCaption("Explicit conversion: List<string> to Order class")]
-        public void Demo4()
+        public void Demo5()
         {
             var ord = (Order)new List<string> { "Apple", "Tomato", "Banana", "Bread", "Butter" };
 
@@ -114,7 +114,7 @@ namespace CSharpDemo.Demos.Overloading
         }
 
         [DemoCaption("Implicit conversion: string to order")]
-        public void Demo5()
+        public void Demo6()
         {
             Order ord = "Apple";
 
