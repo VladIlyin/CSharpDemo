@@ -12,7 +12,7 @@
 //DictionaryDemo.Run();
 //ExtensionDemo.Run();
 //GarbageCollectorDemo.Run(3);
-//GetHashCodeDemo.Run(3);
+GetHashCodeDemo.Run();
 //ImmutabilityCollectionsDemo.Run();
 //IndexersDemo.Run(10);
 //InterfaceDemo.Run();
