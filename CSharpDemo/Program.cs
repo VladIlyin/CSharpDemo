@@ -4,7 +4,7 @@
 //await BlockingCollectionDemo.RunAsync();
 //await CancellationDemo.RunAsync();
 //await ChannelDemo.RunAsync(3);
-//ClosureDemo.Run();
+ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
 //DelegatesMulticastDemo.Run();
@@ -12,7 +12,7 @@
 //DictionaryDemo.Run();
 //ExtensionDemo.Run();
 //GarbageCollectorDemo.Run(3);
-GetHashCodeDemo.Run();
+//GetHashCodeDemo.Run();
 //ImmutabilityCollectionsDemo.Run();
 //IndexersDemo.Run(10);
 //InterfaceDemo.Run();

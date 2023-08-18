@@ -16,3 +16,4 @@ global using CSharpDemo.Demos.Collections;
 global using CSharpDemo.Demos.Concurrency;
 global using CSharpDemo.Demos.Overloading;
 global using CSharpDemo.Demos.CovarianceContrvariance;
+global using CSharpDemo.Demos.Closure;
