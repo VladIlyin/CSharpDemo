@@ -1,38 +1,84 @@
 ﻿using CSharpDemo.Helpers;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpDemo
 {
     public class IndexersDemo : DemoRunner<IndexersDemo>
     {
-        [DemoCaption("Demo 1")]
+        [DemoCaption("Indexer of array of value type returns by reference")]
         public void Demo1()
         {
-
-        }
-
-        // The indexer of the array returns the element by reference
-        // List and all other collections returns the element by value
-        [DemoCaption("Indexers Demo: indexer returns reference or value")]
-        public void Demo10()
-        {
-            var arr = new Point[] {
+            var arr = new[] {
                 new Point { X = 10, Y = 10 }
             };
 
-            arr[0].Reset();             // return array item by ref
-            Console.WriteLine(arr[0]);  // (0; 0)
+            /*
+             * The indexer of the array
+             * returns the element by reference
+             */
 
-            
+            // (10; 10)
+            Console.WriteLine(arr[0]);
 
-            var listPoint = new List<Point>() { new Point { X = 10, Y = 10 } };
+            arr[0].SetToZero();
 
-            // listPoint[0].X = 0; // // error CS1612: Cannot modify the return value because it is not a variable
+            // (0; 0)
+            Console.WriteLine(arr[0]);
 
-            var point = listPoint[0]; // return list item by value
-            point.Reset();
+            /*
+             * Note:
+             * If we do like
+             * var p = arr[0];
+             * p.SetToZero()
+             * then
+             * arr[0] stays untouched - (10, 10)
+             */
+        }
 
-            Console.WriteLine(point);           // (0; 0)
-            Console.WriteLine(listPoint[0]);    // (10; 10)
+        [DemoCaption("Indexer of collection of value type returns by value")]
+        public void Demo2()
+        {
+            var listPoint = new List<Point>() { new() { X = 10, Y = 10 } };
+
+            /*
+             * List and all other collections
+             * returns the element by value
+             */
+
+            // (10; 10)
+            Console.WriteLine(listPoint[0]);
+
+            listPoint.First().SetToZero(); // the same as listPoint[0]
+
+            // (10; 10)
+            Console.WriteLine(listPoint[0]);
+        }
+
+        [DemoCaption("Create custom indexer")]
+        public void Demo3()
+        {
+            var fib = new FibonacciList(140);
+
+            Console.WriteLine(fib[1]);
+            Console.WriteLine(fib[5]);
+            Console.WriteLine(fib[10]);
+            Console.WriteLine(fib[50]);
+            Console.WriteLine(fib[100]);
+            Console.WriteLine(fib[140]);
+
+            /*
+             * Output:
+             * 0
+             * 3
+             * 34
+             * 7778742049
+             * 218922995834555169026
+             * 50095301248058391139327916261
+             */
+
+            // new FibonacciList(141)
+            // error
+            // System.OverflowException: Value was either too large or too small for a Decimal.
         }
 
         struct Point
@@ -40,13 +86,49 @@ namespace CSharpDemo
             public int X;
             public int Y;
 
-            public void Reset()
+            public void SetToZero()
             {
                 X = 0;
                 Y = 0;
             }
 
             public override string ToString() => $"({X}; {Y})";
+        }
+
+        public class FibonacciList
+        {
+            private readonly List<decimal> _list;
+
+            public FibonacciList(int count)
+            {
+                _list = new(count);
+
+                _list = count switch
+                {
+                    0 => new(),
+                    1 => new() { 0 },
+                    2 => new() { 0, 1 },
+                    _ => new() { 0, 1 }
+                };
+
+                FillList(count);
+            }
+
+            private void FillList(int count)
+            {
+                int i = 2;
+
+                while (i < count)
+                {
+                    _list.Add(_list[i - 2] + _list[i - 1]);
+                    i++;
+                }
+            }
+
+            // Indexer declaration
+            public decimal this[int index] => index - 1 < 0
+                ? -1
+                : _list[index - 1];
         }
     }
 }

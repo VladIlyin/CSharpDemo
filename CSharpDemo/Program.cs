@@ -6,14 +6,14 @@
 //ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
-DelegateDemo.Run();
+//DelegateDemo.Run();
 //DiamondProblemDemo.Run();
 //DictionaryDemo.Run();
 //ExtensionDemo.Run();
 //GarbageCollectorDemo.Run(3);
 //GetHashCodeDemo.Run();
 //ImmutabilityCollectionsDemo.Run();
-//IndexersDemo.Run(10);
+IndexersDemo.Run();
 //InterfaceDemo.Run();
 //LinqDemo.Run();
 //OperatorOverloading.Run();
