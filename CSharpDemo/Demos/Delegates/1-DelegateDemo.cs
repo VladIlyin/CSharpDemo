@@ -4,6 +4,13 @@ namespace CSharpDemo.Demos.Delegates
 {
     public partial class DelegateDemo : DemoRunner<DelegateDemo>
     {
+        public record Animal
+        {
+            public string Name { get; set; }
+        }
+
+        public record Cat : Animal { }
+
         public class Person { public string Name { get; set; } }
         public class Employee : Person { }
         public class Programmer : Employee { }
@@ -11,6 +18,7 @@ namespace CSharpDemo.Demos.Delegates
         public class Guid : Identity { }
 
         delegate Person GetPersonById(Guid id);
+        
 
         delegate int ProcessTwoNumbers(int a, int b);
 
@@ -139,24 +147,47 @@ namespace CSharpDemo.Demos.Delegates
             ((ProcessNumber)combined)?.Invoke(16);
         }
 
-        [DemoCaption("Delegate demo: covariance and contravariance")]
-        public void Demo6()
-        {
-            /*
-             * Delegate GetEmployeeById takes parameter
-             * with type Guid and returns Person
-             * Covariance and contravariance allow to assign
-             * method GetPerson to the delegate
-             */
+        delegate Animal AnimalDelegate(string name);
 
-            Employee GetPerson(Identity id)
+        [DemoCaption("Delegate demo: covariance and contravariance")]
+        public void Demo5()
+        {
+            Cat GetAnimal(object name)
             {
-                return new Programmer();
+                return new Cat() { Name = name.ToString() ?? "" };
             }
 
-            GetPersonById getPerson = GetPerson;
+            /*
+             * Delegate AnimalDelegate takes parameter
+             * with type `string` and returns type `Animal`
+             * Covariance and contravariance allow to assign
+             * method `GetAnimal` to the delegate.
+             */
 
-            getPerson(new Guid());
+            AnimalDelegate del = GetAnimal;
+
+            var cat = del("Tom");
+
+            // Cat { Name = Tom }
+            Console.WriteLine(cat);
+        }
+
+        [DemoCaption("Action demo: print sum of two numbers")]
+        public void Demo6()
+        {
+            Action<int, int> sumTwo = (int a, int b) => Console.WriteLine(a + b);
+
+            // 10
+            sumTwo(5, 5);
+        }
+
+        [DemoCaption("Func demo: sum two numbers and return result")]
+        public void Demo7()
+        {
+            Func<int, int, int> sumTwo = (int a, int b) => a + b;
+
+            // 30
+            Console.WriteLine(sumTwo(15, 15));
         }
     }
 }
