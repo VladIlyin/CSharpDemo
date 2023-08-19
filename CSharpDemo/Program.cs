@@ -6,10 +6,10 @@
 //ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
-DelegateDemo.Run();
+//DelegateDemo.Run();
 //DiamondProblemDemo.Run();
 //DictionaryDemo.Run();
-//ExtensionDemo.Run();
+ExtensionDemo.Run();
 //GarbageCollectorDemo.Run(3);
 //GetHashCodeDemo.Run();
 //ImmutabilityCollectionsDemo.Run();

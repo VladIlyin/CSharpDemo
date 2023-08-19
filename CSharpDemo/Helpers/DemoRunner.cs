@@ -60,17 +60,20 @@ namespace CSharpDemo.Helpers
                 return;
             }
 
-            var attr = method
+            var caption = method
                 .GetCustomAttributes(typeof(DemoCaptionAttribute), true)
-                .FirstOrDefault() as DemoCaptionAttribute;
+                .FirstOrDefault() is DemoCaptionAttribute attr
+                ? attr.Caption
+                : string.Empty;
 
-            PrintHeaderToConsole(attr?.Caption ?? method.Name);
+            PrintHeaderToConsole(method.Name, caption);
             method.Invoke(instance, null);
             PrintFooterToConsole();
         }
 
-        private static void PrintHeaderToConsole(string caption)
+        private static void PrintHeaderToConsole(string methodName, string caption)
         {
+            Console.Write($"{methodName} ");
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{caption}\n");
             Console.ResetColor();
@@ -104,35 +107,41 @@ namespace CSharpDemo.Helpers
             {
                 foreach (var method in methods)
                 {
-                    await InvokeSingleDemoMethodAsync(instance, method);
+                    await RunSingleDemoMethodAsync(instance, method);
                 }
             }
             else
             {
                 foreach (var number in demoNumbers)
                 {
-                    await InvokeSingleDemoMethodAsync(instance, methods
+                    await RunSingleDemoMethodAsync(instance, methods
                         .FirstOrDefault(x => x.Name == $"Demo{number}"));
                 }
             }
 
         }
 
-        private static async Task InvokeSingleDemoMethodAsync(T instance, MethodInfo? method)
+        private static async Task RunSingleDemoMethodAsync(T instance, MethodInfo? method)
         {
             if (method == null)
             {
                 return;
             }
 
-            var attr = method
+            var caption = method
                 .GetCustomAttributes(typeof(DemoCaptionAttribute), true)
-                .FirstOrDefault() as DemoCaptionAttribute;
+                .FirstOrDefault() is DemoCaptionAttribute attr
+                ? attr.Caption
+                : string.Empty;
 
-            PrintHeaderToConsole(attr?.Caption ?? method.Name);
+            PrintHeaderToConsole(method.Name, caption);
 
             var task = (Task?)method.Invoke(instance, null);
-            if (task != null) await task;
+            
+            if (task != null)
+            {
+                await task;
+            }
 
             PrintFooterToConsole();
         }

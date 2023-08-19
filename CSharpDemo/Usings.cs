@@ -18,3 +18,4 @@ global using CSharpDemo.Demos.Overloading;
 global using CSharpDemo.Demos.CovarianceContrvariance;
 global using CSharpDemo.Demos.Closure;
 global using CSharpDemo.Demos.Delegates;
+global using CSharpDemo.Demos.Extensions;
