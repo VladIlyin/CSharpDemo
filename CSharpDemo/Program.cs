@@ -1,13 +1,12 @@
-﻿//ActionFuncDemo.Run();
-//AnonymousTypeDemo.Run();
+﻿//AnonymousTypeDemo.Run();
 //await AsyncAwaitDemo.RunAsync();
 //await BlockingCollectionDemo.RunAsync();
 //await CancellationDemo.RunAsync();
 //await ChannelDemo.RunAsync(3);
-ClosureDemo.Run();
+//ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
-//DelegatesMulticastDemo.Run();
+DelegateDemo.Run();
 //DiamondProblemDemo.Run();
 //DictionaryDemo.Run();
 //ExtensionDemo.Run();
