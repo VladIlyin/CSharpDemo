@@ -19,3 +19,5 @@ global using CSharpDemo.Demos.CovarianceContrvariance;
 global using CSharpDemo.Demos.Closure;
 global using CSharpDemo.Demos.Delegates;
 global using CSharpDemo.Demos.Extensions;
+global using CSharpDemo.Demos.LINQ;
+global using CSharpDemo.Demos.Indexers__Ranges__Indices;

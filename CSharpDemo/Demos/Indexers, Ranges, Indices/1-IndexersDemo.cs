@@ -1,9 +1,8 @@
 ﻿using CSharpDemo.Helpers;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpDemo
+namespace CSharpDemo.Demos.Indexers__Ranges__Indices
 {
-    public class IndexersDemo : DemoRunner<IndexersDemo>
+    public partial class IndexersDemo : DemoRunner<IndexersDemo>
     {
         [DemoCaption("Indexer of array of value type returns by reference")]
         public void Demo1()
