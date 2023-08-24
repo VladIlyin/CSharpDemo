@@ -16,6 +16,25 @@
             if (comment != null) Console.WriteLine($"\n");
         }
 
+        public static void WriteLineCollection<T>(
+            IEnumerable<T[]> lists,
+            string comment = null)
+        {
+            if (comment != null) Console.WriteLine($"{comment}\n");
+
+            foreach (var list in lists)
+            {
+                foreach (var item in list)
+                {
+                    Console.Write($"{item} ");
+                }
+
+                Console.Write(Environment.NewLine);
+            }
+
+            if (comment != null) Console.WriteLine($"\n");
+        }
+
         public static void WriteLineSpan<T>(
             Span<T> span,
             string comment = null)

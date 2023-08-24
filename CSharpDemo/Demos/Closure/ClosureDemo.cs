@@ -4,10 +4,28 @@ namespace CSharpDemo.Demos.Closure
 {
     public class ClosureDemo : DemoRunner<ClosureDemo>
     {
+        [DemoCaption("Closure: 1st class function + free variable")]
+        public void Demo1()
+        {
+            var counter = getCounter(0);
+
+            Console.WriteLine(counter());   // 1
+            Console.WriteLine(counter());   // 2
+            Console.WriteLine(counter());   // 3
+
+            Func<int> getCounter(int seed)
+            {
+                var counter = 0;
+
+                var func = () => ++counter;
+                return func;
+            }
+        }
+
         delegate void PrintNumber();
 
         [DemoCaption("Closure: classic issue with closure")]
-        public void Demo1()
+        public void Demo2()
         {
             var actions = new List<Action>();
 
@@ -54,27 +72,5 @@ namespace CSharpDemo.Demos.Closure
          *      ...
          *  }
          */
-
-        [DemoCaption("Closure: classic issue - solution")]
-        public void Demo2()
-        {
-            var actions = new List<Action>();
-
-            for (var i = 0; i < 10; i++)
-            {
-                var num = i;
-                actions.Add(() => Console.Write($"{num} "));
-            }
-
-            foreach (var action in actions)
-            {
-                action();
-            }
-
-            /*
-             * Output:
-             * 0 1 2 3 4 5 6 7 8 9
-             */
-        }
     }
 }

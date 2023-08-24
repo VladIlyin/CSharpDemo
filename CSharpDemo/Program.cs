@@ -3,7 +3,7 @@
 //await BlockingCollectionDemo.RunAsync();
 //await CancellationDemo.RunAsync();
 //await ChannelDemo.RunAsync(3);
-//ClosureDemo.Run();
+ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
 //DelegateDemo.Run();
@@ -13,9 +13,10 @@
 //GarbageCollectorDemo.Run(3);
 //GetHashCodeDemo.Run();
 //ImmutabilityCollectionsDemo.Run();
-IndexersDemo.Run();
+//IndexersDemo.Run();
 //InterfaceDemo.Run();
 //LinqDemo.Run();
+//await SynchronizationPrimitivesDemo.RunAsync();
 //OperatorOverloading.Run();
 //OverloadingDemo.Run();
 //PointersDemo.Run();

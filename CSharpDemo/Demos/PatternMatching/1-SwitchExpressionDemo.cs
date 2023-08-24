@@ -42,7 +42,8 @@ namespace CSharpDemo.Demos.PatternMatching
         [DemoCaption("Pattern matching: ")]
         public void Demo2()
         {
-            //TODO: add more demos
+            //while (fast != null && fast.Next != null)
+            //while (fast is { Next: { } })
         }
     }
 }

@@ -21,3 +21,4 @@ global using CSharpDemo.Demos.Delegates;
 global using CSharpDemo.Demos.Extensions;
 global using CSharpDemo.Demos.LINQ;
 global using CSharpDemo.Demos.Indexers__Ranges__Indices;
+global using CSharpDemo.Demos.Concurrency.Synchronization;
