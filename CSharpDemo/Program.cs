@@ -3,7 +3,7 @@
 //await BlockingCollectionDemo.RunAsync();
 //await CancellationDemo.RunAsync();
 //await ChannelDemo.RunAsync(3);
-ClosureDemo.Run();
+//ClosureDemo.Run();
 //ConcurrentDictionaryDemo.Run();
 //CovarianceContravarianceDemo.Run();
 //DelegateDemo.Run();
@@ -21,6 +21,7 @@ ClosureDemo.Run();
 //OverloadingDemo.Run();
 //PointersDemo.Run();
 //RecordDemo.Run();
+RefInOutDemo.Run();
 //RefLocalDemo.Run();
 //RequiredDemo.Run();
 //SpanDemo.Run();

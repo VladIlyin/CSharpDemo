@@ -1,34 +1,32 @@
-﻿using System.Diagnostics.Tracing;
-using CSharpDemo.Helpers;
+﻿using CSharpDemo.Helpers;
 
 namespace CSharpDemo.Demos.Concurrency.Synchronization
 {
     public partial class SynchronizationPrimitivesDemo : DemoRunner<SynchronizationPrimitivesDemo>
     {
-        private object objLock = new();
-        private int counter;
-
         [DemoCaption("Lock")]
         public async Task Demo1()
         {
+            object objLock = new();
+            var counter = 0;
+
             void IncrementingCounter()
             {
                 lock (objLock)
                 {
-                    // error Cannot await in the body of a lock statement
-                    // await Task.Delay(100);
                     counter++;
                 }
             }
 
-            var tasks = new List<Action>();
-
-            for (var i = 0; i < 1000; i++)
+            IEnumerable<Action> GetTasks()
             {
-                tasks.Add(IncrementingCounter);
+                for (var i = 0; i < 1000; i++)
+                {
+                    yield return IncrementingCounter;
+                }
             }
 
-            Parallel.Invoke(tasks.ToArray());
+            Parallel.Invoke(GetTasks().ToArray());
 
             Console.WriteLine(counter); // 1000
         }
@@ -36,49 +34,50 @@ namespace CSharpDemo.Demos.Concurrency.Synchronization
         [DemoCaption("Await inside the Monitor")]
         public async Task Demo2()
         {
-            var counter = 0;
+            object objLock = new();
 
-            var tasks = new List<Task>();
+            var lockTaken = false;
 
-            for (var i = 0; i < 10; i++)
-            {
-                tasks.Add(DoWork());
-            }
-
-            /*
-             System.Threading.SynchronizationLockException:
-             "Object synchronization method was called  
-             from an unsynchronized block of code
-            */
             try
             {
-                await Task.WhenAll(tasks.ToArray());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+                Monitor.Enter(objLock, ref lockTaken);
 
-            async Task DoWork()
-            {
-                Monitor.Enter(objLock);
+                Console.WriteLine($"lock 1 is taken: {lockTaken}");
+                Console.WriteLine(Thread.CurrentThread.ManagedThreadId); // some id1
+                
+                // comment this line out to make it works properly
+                await Task.Yield();
 
-                try
-                {
-                    var n = await GetNumber();
-                    counter += n;
-                    Console.WriteLine(counter);
-                }
-                finally
+                Console.WriteLine(Thread.CurrentThread.ManagedThreadId); // some id2 differs form id1
+
+                // omit try finally for simplicity
+                var lockTaken2 = false;
+                Monitor.TryEnter(objLock, 1000, ref lockTaken2);
+
+                Console.WriteLine($"lock 2 is taken: {lockTaken2}");
+
+                if (lockTaken2)
                 {
                     Monitor.Exit(objLock);
+                    Console.WriteLine("Exit lock 2");
                 }
             }
-
-            async Task<int> GetNumber()
+            finally
             {
-                await Task.Yield();
-                return await Task.FromResult(1);
+                if (lockTaken)
+                {
+                    // Exception throws here:
+                    // Object synchronization method was called from an unsynchronized block of code
+                    try
+                    {
+                        Monitor.Exit(objLock);
+                        Console.WriteLine("Exit lock 1");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }
