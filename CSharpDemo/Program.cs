@@ -21,13 +21,14 @@
 //OverloadingDemo.Run();
 //PointersDemo.Run();
 //RecordDemo.Run();
-RefInOutDemo.Run();
+//RefInOutDemo.Run();
 //RefLocalDemo.Run();
 //RequiredDemo.Run();
 //SpanDemo.Run();
 //SpanDemoBenchmark.RunBenchmark();
 //SwitchExpressionDemo.Run();
-//WeakReferenceDemo.Run();
+WeakReferenceDemo.Run();
+//YieldDemo.Run();
 
 
 

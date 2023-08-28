@@ -1,67 +1,40 @@
-﻿using CSharpDemo.Helpers;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
-using System.ComponentModel;
-using System.Text;
+﻿using CSharpDemo.DemoRunner;
 
-namespace CSharpDemo.Demos.WeakRefernce
+namespace CSharpDemo.Demos.WeakRefernce;
+
+public class WeakReferenceDemo : DemoRunner<WeakReferenceDemo>
 {
-    public class WeakReferenceDemo : DemoRunner<WeakReferenceDemo>
+    static WeakReference<IEnumerable<int>> _weak;
+
+    [DemoCaption("Demo 1 - collecting weak reference after GC.Collect()")]
+    public void Demo1()
     {
-        static WeakReference<IEnumerable<int>> _weak;
-
-        [DemoCaption("Demo 1")]
-        public void Demo1()
+        RunDemoTemplateMethod.YesNoLoop(() =>
         {
-            var quit = 'y';
-            while (quit == 'y')
-            {
-                Console.WriteLine("Collect memory? (y/n)\n");
-                var ch = Console.ReadKey(true).KeyChar;
+            Console.WriteLine("Collect memory? (y/n)\n");
+            var ch = Console.ReadKey(true).KeyChar;
 
-                AddWeakReference();
-                TryGetWeakReferenceTarget();
+            Console.WriteLine("Initializing weak reference...");
 
-                Console.WriteLine($"Total memory: {GC.GetTotalMemory(false)}");
+            _weak = new WeakReference<IEnumerable<int>>(GetBigList());
 
-                if (ch == 'y')
-                {
-                    Collect();
-                    Console.WriteLine($"Total memory: {GC.GetTotalMemory(false)}");
-                }
+            Console.WriteLine($"Try to get target: {_weak.TryGetTarget(out _)}");
 
-                TryGetWeakReferenceTarget();
-                
-                Console.WriteLine("\nContinue? (y/n)\n");
-                quit = Console.ReadKey(true).KeyChar;
-            }
+            Console.WriteLine($"Total memory: {GC.GetTotalMemory(false)}");
 
-            void AddWeakReference()
-            {
-                Console.WriteLine($"Run {nameof(AddWeakReference)} method");
-
-                _weak = new WeakReference<IEnumerable<int>>(getList(500 * 1000 * 1000));
-            }
-
-            void TryGetWeakReferenceTarget()
-            {
-                Console.WriteLine($"Try to get target: {_weak.TryGetTarget(out var values)}");
-            }
-
-            void Collect()
+            if (ch == 'y')
             {
                 Console.WriteLine("Collecting...");
                 GC.Collect();
+                Console.WriteLine($"Total memory: {GC.GetTotalMemory(false)}");
             }
-        }
 
-        static List<int> getList(int count)
-        {
-            var list = new List<int>(count);
-            foreach (var val in Enumerable.Range(0, count))
-                list.Add(val);
+            Console.WriteLine($"Try to get target: {_weak.TryGetTarget(out _)}");
 
-            return list;
-        }
+            static List<int> GetBigList()
+            {
+                return Enumerable.Range(0, 500 * 1000 * 1000).ToList();
+            }
+        });
     }
 }

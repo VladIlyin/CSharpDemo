@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace CSharpDemo.Helpers;
+namespace CSharpDemo.DemoRunner;
 
 public class DemoRunnerBenchmark<T> where T : DemoRunnerBenchmark<T>, new()
 {

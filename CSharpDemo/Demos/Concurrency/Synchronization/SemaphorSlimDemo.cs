@@ -1,46 +1,45 @@
-﻿using CSharpDemo.Helpers;
+﻿using CSharpDemo.DemoRunner;
 
-namespace CSharpDemo.Demos.Concurrency.Synchronization
+namespace CSharpDemo.Demos.Concurrency.Synchronization;
+
+public partial class SynchronizationPrimitivesDemo
 {
-    public partial class SynchronizationPrimitivesDemo
+    private HttpClient _httpClient = new()
     {
-        private HttpClient _httpClient = new()
+        Timeout = TimeSpan.FromMilliseconds(500)
+    };
+
+    private SemaphoreSlim _httpCallGate = new(5);
+
+    [DemoCaption("SemaphoreSlim - HttpClient calls")]
+    public async Task Demo3()
+    {
+        await Task.WhenAll(GetTasks());
+
+        IEnumerable<Task> GetTasks()
         {
-            Timeout = TimeSpan.FromMilliseconds(500)
-        };
-
-        private SemaphoreSlim _httpCallGate = new(5);
-
-        [DemoCaption("SemaphoreSlim - HttpClient calls")]
-        public async Task Demo3()
-        {
-            await Task.WhenAll(GetTasks());
-
-            IEnumerable<Task> GetTasks()
+            for (var i = 0; i < 100; i++)
             {
-                for (var i = 0; i < 100; i++)
-                {
-                    yield return YandexCall();
-                }
-            }
-
-            async Task YandexCall()
-            {
-                try
-                {
-                    await _httpCallGate.WaitAsync();
-
-                    var response = await _httpClient.GetAsync("http://www.yandex.ru");
-                    Console.WriteLine(response.StatusCode);
-
-                    _httpCallGate.Release();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                yield return YandexCall();
             }
         }
 
+        async Task YandexCall()
+        {
+            try
+            {
+                await _httpCallGate.WaitAsync();
+
+                var response = await _httpClient.GetAsync("http://www.yandex.ru");
+                Console.WriteLine(response.StatusCode);
+
+                _httpCallGate.Release();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
+
 }

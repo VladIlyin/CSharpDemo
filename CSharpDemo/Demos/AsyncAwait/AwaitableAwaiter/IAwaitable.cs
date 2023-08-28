@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CSharpDemo.Demos.AsyncAwait.AwaitableAwaiter;
 
-namespace CSharpDemo.AsyncAwait.AwaitableAwaiter
+public interface IAwaitable<TResult>
 {
-    public interface IAwaitable<TResult>
-    {
-        public FuncAwaiter<TResult> GetAwaiter();
-    }
+    public FuncAwaiter<TResult> GetAwaiter();
 }

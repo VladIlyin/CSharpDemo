@@ -1,4 +1,4 @@
-﻿namespace CSharpDemo.Helpers;
+﻿namespace CSharpDemo.DemoRunner;
 
 public class DemoCaptionAttribute : Attribute
 {

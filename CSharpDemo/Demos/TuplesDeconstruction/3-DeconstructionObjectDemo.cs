@@ -1,13 +1,12 @@
-﻿using CSharpDemo.Helpers;
+﻿using CSharpDemo.DemoRunner;
 
-namespace CSharpDemo.Demos.TuplesDeconstruction
+namespace CSharpDemo.Demos.TuplesDeconstruction;
+
+public class DeconstructionObjectDemo : DemoRunner<DeconstructionObjectDemo>
 {
-    public class DeconstructionObjectDemo : DemoRunner<DeconstructionObjectDemo>
+    [DemoCaption("Demo 1")]
+    public void Demo1()
     {
-        [DemoCaption("Demo 1")]
-        public void Demo1()
-        {
 
-        }
     }
 }
